@@ -111,7 +111,7 @@ Test.assertEquals(pluralLambdaRDD.collect(), ['cats', 'elephants', 'rats', 'rats
 
 # TODO: Replace <FILL IN> with appropriate code
 pluralLengths = (pluralRDD
-                 .map(lambda x: len(x))
+                 .map(lambda x: len(x)) #set word length
                  .collect())
 print pluralLengths
 
@@ -130,7 +130,7 @@ Test.assertEquals(pluralLengths, [4, 9, 4, 4, 4],
 # In[11]:
 
 # TODO: Replace <FILL IN> with appropriate code
-wordPairs = wordsRDD.map(lambda x: (x,1))
+wordPairs = wordsRDD.map(lambda x: (x,1)) # make a pair like (word,1)
 print wordPairs.collect()
 
 
@@ -160,7 +160,7 @@ Test.assertEquals(wordPairs.collect(),
 # Note that groupByKey requires no parameters
 wordsGrouped = wordPairs.groupByKey()
 for key, value in wordsGrouped.collect():
-    print '{0}: {1}'.format(key, list(value))
+    print '{0}: {1}'.format(key, list(value)) #python printing form
 
 
 # In[14]:
@@ -179,7 +179,7 @@ Test.assertEquals(sorted(wordsGrouped.mapValues(lambda x: list(x)).collect()),
 
 # TODO: Replace <FILL IN> with appropriate code
 from operator import add
-wordCountsGrouped = wordsGrouped.map(lambda x : (x[0], sum(x[1])))
+wordCountsGrouped = wordsGrouped.map(lambda x : (x[0], sum(x[1]))) # make a pair like (word, sum of list value)
 print wordCountsGrouped.collect()
 
 
@@ -199,7 +199,7 @@ Test.assertEquals(sorted(wordCountsGrouped.collect()),
 # TODO: Replace <FILL IN> with appropriate code
 # Note that reduceByKey takes in a function that accepts two values and returns a single value
 from operator import add
-wordCounts = wordPairs.reduceByKey(add)
+wordCounts = wordPairs.reduceByKey(add) # reduce by key - more: appendix in ppt
 print wordCounts.collect()
 
 
@@ -217,7 +217,7 @@ Test.assertEquals(sorted(wordCounts.collect()), [('cat', 2), ('elephant', 1), ('
 
 # TODO: Replace <FILL IN> with appropriate code
 from operator import add
-wordCountsCollected = wordsRDD.map(lambda x: (x,1)).reduceByKey(add).collect()
+wordCountsCollected = wordsRDD.map(lambda x: (x,1)).reduceByKey(add).collect() # all in one
 print wordCountsCollected
 
 
@@ -256,10 +256,10 @@ Test.assertEquals(uniqueWords, 3, 'incorrect count of uniqueWords')
 from operator import add
 totalCount = (wordCounts
               .map(lambda x: x[1])
-              .reduce(add))
-average = totalCount / float(wordsRDD.map(lambda x: (x,1)).reduceByKey(add).count())
+              .reduce(lambda a,b:a+b)) #get total count
+average = totalCount / float(wordsRDD.map(lambda x: (x,1)).reduceByKey(add).count()) #total count/distinct word count
 print totalCount
-print round(average, 2)
+print round(average, 2) # rounding off to the nearest integer
 
 
 # In[24]:
@@ -325,7 +325,7 @@ def removePunctuation(text):
     Returns:
         str: The cleaned up string.
     """
-    return re.sub(r'[^a-z0-9\s]','', text.lower()).strip()
+    return re.sub(r'[^a-z0-9\s]','', text.lower()).strip() # remove Punctuation
 print removePunctuation('Hi, you!')
 print removePunctuation(' No under_score!')
 
