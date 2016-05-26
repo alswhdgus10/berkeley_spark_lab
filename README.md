@@ -6,3 +6,5 @@ lab1 - wordCount
 lab2 - apache_log_student
 
 lab3 - text analysis and entity resolution
+
+lab4 - lab4_machine_learning_student
